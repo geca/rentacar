@@ -7,8 +7,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// locahlost:8000/api/test
-Route::get('/test', [App\Http\Controllers\CountryController::class, 'test']);
 
 Route::get('/countries', [App\Http\Controllers\CountryController::class, 'index']);
 Route::post('/countries', [App\Http\Controllers\CountryController::class, 'store']);
@@ -19,3 +17,9 @@ Route::get('/cities', [App\Http\Controllers\CityController::class, 'index']);
 Route::post('/cities', [App\Http\Controllers\CityController::class, 'store']);
 Route::put('/cities/{id}', [App\Http\Controllers\CityController::class, 'update']);
 Route::delete('/cities/{id}', [App\Http\Controllers\CityController::class, 'destroy']);
+
+Route::get('/users', [App\Http\Controllers\UserController::class, 'index']);
+Route::get('/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
+Route::post('/users', [App\Http\Controllers\UserController::class, 'store']);
+Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update']);
+Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy']);

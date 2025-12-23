@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'user_type',
+        'business_name',
+        'tax_id',
+        'country_id',
+        'city_id',
     ];
 
     /**
@@ -45,4 +50,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function isProvider()
+    {
+        return $this->user_type === 'provider';
+    }
+
+    public function isRenter()
+    {
+        return $this->user_type === 'renter';
+    }
+
 }
