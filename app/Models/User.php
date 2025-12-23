@@ -71,4 +71,9 @@ class User extends Authenticatable
         return $this->user_type === 'renter';
     }
 
+    public function cars()
+    {
+        return $this->hasMany(Car::class, 'provider_id');
+    }    
+
 }

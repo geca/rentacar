@@ -24,4 +24,9 @@ class Country extends Model
         return $this->hasMany(User::class);
     }
 
+    public function cars()
+    {
+        return $this->hasMany(Car::class);
+    }
+
 }

@@ -23,3 +23,9 @@ Route::get('/users/{id}', [App\Http\Controllers\UserController::class, 'show']);
 Route::post('/users', [App\Http\Controllers\UserController::class, 'store']);
 Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update']);
 Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy']);
+
+Route::get('/cars', [App\Http\Controllers\CarController::class, 'index']);
+Route::get('/cars/{id}', [App\Http\Controllers\CarController::class, 'show']);
+Route::post('/cars', [App\Http\Controllers\CarController::class, 'store']);
+Route::put('/cars/{id}', [App\Http\Controllers\CarController::class, 'update']);
+Route::delete('/cars/{id}', [App\Http\Controllers\CarController::class, 'destroy']);
