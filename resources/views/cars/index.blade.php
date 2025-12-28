@@ -235,7 +235,7 @@
                         <td><strong>${car.make} ${car.model}</strong></td>
                         <td>${car.year}</td>
                         <td>${car.license_plate}</td>
-                        <td>$${parseFloat(car.daily_rate).toFixed(2)}</td>
+                        <td>€${parseFloat(car.daily_rate).toFixed(2)}</td>
                         <td>${location}</td>
                         <td>${statusBadge}</td>
                         <td>
