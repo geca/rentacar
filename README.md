@@ -1,62 +1,312 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Rent-a-Car Laravel Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a simple Laravel application for managing a rent-a-car business. The application provides RESTful API endpoints for managing countries, cities, users (customers and providers), and cars.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- MySQL or another supported database
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
+3. Copy `.env.example` to `.env` and configure your database
+4. Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
+5. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+6. Start the development server:
+   ```bash
+   php artisan serve
+   ```
 
-## Learning Laravel
+## Accessing the Application
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Web GUI
+The web interface is accessible at:
+- **Local development**: `http://localhost:8000` or `http://127.0.0.1:8000`
+- **Home page**: Displays the cars index view
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### API Base URL
+All API endpoints are prefixed with `/api`:
+- **Base URL**: `http://localhost:8000/api`
 
-## Laravel Sponsors
+## API Routes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Countries
 
-### Premium Partners
+#### Get All Countries
+```
+GET /api/countries
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+#### Create Country
+```
+POST /api/countries
+Content-Type: application/json
 
-## Contributing
+{
+  "name": "United States",
+  "code": "US",
+  "short_name": "USA",
+  "in_eu": false
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Update Country
+```
+PUT /api/countries/{id}
+Content-Type: application/json
 
-## Code of Conduct
+{
+  "name": "United States of America",
+  "code": "US",
+  "short_name": "USA",
+  "in_eu": false
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Delete Country
+```
+DELETE /api/countries/{id}
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Cities
+
+#### Get All Cities
+```
+GET /api/cities
+```
+
+#### Create City
+```
+POST /api/cities
+Content-Type: application/json
+
+{
+  "name": "New York",
+  "postal_code": "10001",
+  "country_id": 1
+}
+```
+
+#### Update City
+```
+PUT /api/cities/{id}
+Content-Type: application/json
+
+{
+  "name": "New York City",
+  "postal_code": "10001",
+  "country_id": 1
+}
+```
+
+#### Delete City
+```
+DELETE /api/cities/{id}
+```
+
+---
+
+### Users
+
+#### Get All Users
+```
+GET /api/users
+```
+
+#### Get User by ID
+```
+GET /api/users/{id}
+```
+
+#### Create User
+```
+POST /api/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword123",
+  "user_type": "customer",
+  "country_id": 1,
+  "city_id": 1
+}
+```
+
+**For Rent-a-Car Provider:**
+```json
+{
+  "name": "Jane Smith",
+  "email": "jane@rentalcompany.com",
+  "password": "securepassword123",
+  "user_type": "provider",
+  "business_name": "Best Car Rentals",
+  "tax_id": "123456789",
+  "country_id": 1,
+  "city_id": 1
+}
+```
+
+#### Update User
+```
+PUT /api/users/{id}
+Content-Type: application/json
+
+{
+  "name": "John Updated",
+  "email": "john.updated@example.com",
+  "user_type": "customer",
+  "country_id": 1,
+  "city_id": 2
+}
+```
+
+#### Delete User
+```
+DELETE /api/users/{id}
+```
+
+---
+
+### Cars
+
+#### Get All Cars
+```
+GET /api/cars
+```
+
+#### Get Car by ID
+```
+GET /api/cars/{id}
+```
+
+#### Create Car
+```
+POST /api/cars
+Content-Type: application/json
+
+{
+  "provider_id": 2,
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2023,
+  "color": "Silver",
+  "license_plate": "ABC-1234",
+  "transmission": "automatic",
+  "fuel_type": "gasoline",
+  "seats": 5,
+  "doors": 4,
+  "daily_rate": 45.00,
+  "country_id": 1,
+  "city_id": 1,
+  "status": "available"
+}
+```
+
+**Status options**: `available`, `rented`, `maintenance`
+
+#### Update Car
+```
+PUT /api/cars/{id}
+Content-Type: application/json
+
+{
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2023,
+  "color": "Blue",
+  "license_plate": "ABC-1234",
+  "transmission": "automatic",
+  "fuel_type": "gasoline",
+  "seats": 5,
+  "doors": 4,
+  "daily_rate": 50.00,
+  "country_id": 1,
+  "city_id": 1,
+  "status": "available"
+}
+```
+
+#### Delete Car
+```
+DELETE /api/cars/{id}
+```
+
+---
+
+## Data Models
+
+### Country
+- `name` (string, required)
+- `code` (string, required) - ISO country code
+- `short_name` (string, required)
+- `in_eu` (boolean, required)
+
+### City
+- `name` (string, required)
+- `postal_code` (string, required)
+- `country_id` (integer, required) - Foreign key to countries
+
+### User
+- `name` (string, required)
+- `email` (string, required, unique)
+- `password` (string, required)
+- `user_type` (string, required) - `customer` or `provider`
+- `business_name` (string, optional) - For providers
+- `tax_id` (string, optional) - For providers
+- `country_id` (integer, required)
+- `city_id` (integer, required)
+
+### Car
+- `provider_id` (integer, required) - Foreign key to users
+- `make` (string, required)
+- `model` (string, required)
+- `year` (integer, required)
+- `color` (string, required)
+- `license_plate` (string, required)
+- `transmission` (string, required)
+- `fuel_type` (string, required)
+- `seats` (integer, required)
+- `doors` (integer, required)
+- `daily_rate` (decimal, required)
+- `country_id` (integer, required)
+- `city_id` (integer, required)
+- `status` (string, required) - `available`, `rented`, or `maintenance`
+
+## Testing the API
+
+You can test the API using tools like:
+- **Postman**
+- **cURL**
+- **Insomnia**
+- **VS Code REST Client extension**
+
+Example cURL request:
+```bash
+curl -X GET http://localhost:8000/api/cars
+curl -X POST http://localhost:8000/api/cars \
+  -H "Content-Type: application/json" \
+  -d '{"provider_id":1,"make":"Honda","model":"Civic","year":2024,"color":"Red","license_plate":"XYZ-789","transmission":"manual","fuel_type":"gasoline","seats":5,"doors":4,"daily_rate":40.00,"country_id":1,"city_id":1,"status":"available"}'
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This application is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 
 
